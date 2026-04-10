@@ -137,8 +137,8 @@ return (
 }
 
 const getSettings = () => {
-try { return { companyName: “VR365 PropFlow”, tagline: “Property Management”, accentColor: “#4f8ef7”, managerName: “Property Manager”, …JSON.parse(localStorage.getItem(“vr365_settings”) || “{}”) }; }
-catch { return { companyName: “VR365 PropFlow”, tagline: “Property Management”, accentColor: “#4f8ef7”, managerName: “Property Manager” }; }
+try { return { companyName: “VR365 Hostly”, tagline: “Property Operations”, accentColor: “#4f8ef7”, managerName: “Property Manager”, …JSON.parse(localStorage.getItem(“vr365_settings”) || “{}”) }; }
+catch { return { companyName: “VR365 Hostly”, tagline: “Property Operations”, accentColor: “#4f8ef7”, managerName: “Property Manager” }; }
 };
 
 const C = { bg: “#0b0e17”, surface: “#131825”, surfaceAlt: “#1a2035”, border: “#1f2840”, accent: “#4f8ef7”, accentDim: “#4f8ef718”, green: “#34d399”, yellow: “#fbbf24”, red: “#f87171”, purple: “#a78bfa”, text: “#e2e8f8”, muted: “#5a6580”, dim: “#2a3350” };
@@ -1381,7 +1381,7 @@ return (
 <div style={{ display:“flex”, justifyContent:“space-between”, alignItems:“center”, marginBottom:24 }}>
 <div>
 <h2 style={{ margin:0, fontSize:22, fontWeight:800, color:C.text }}>Settings</h2>
-<p style={{ margin:“4px 0 0”, color:C.muted, fontSize:13 }}>Customize your VR365 PropFlow experience</p>
+<p style={{ margin:“4px 0 0”, color:C.muted, fontSize:13 }}>Customize your VR365 Hostly experience</p>
 </div>
 <button onClick={save} style={{ background:saved?C.green:C.accent, color:”#fff”, border:“none”, borderRadius:8, padding:“9px 20px”, fontWeight:700, cursor:“pointer”, fontSize:13, fontFamily:“inherit”, transition:“background 0.3s” }}>{saved?“✓ Saved!”:“Save Changes”}</button>
 </div>
@@ -1395,8 +1395,8 @@ return (
 <div style={{ background:C.surface, border:`1px solid ${C.border}`, borderRadius:14, padding:24, gridColumn:“1/-1” }}>
 <h3 style={{ margin:“0 0 16px”, fontSize:15, fontWeight:700, color:C.text }}>🏢 Company Branding</h3>
 <div style={{ display:“grid”, gridTemplateColumns:“1fr 1fr”, gap:14 }}>
-<div><label style={{ color:C.muted, fontSize:12, fontWeight:600, display:“block”, marginBottom:6 }}>Company / App Name</label><Input value={settings.companyName} onChange={v=>set(“companyName”,v)} placeholder=“VR365 PropFlow” /></div>
-<div><label style={{ color:C.muted, fontSize:12, fontWeight:600, display:“block”, marginBottom:6 }}>Tagline</label><Input value={settings.tagline} onChange={v=>set(“tagline”,v)} placeholder=“Property Management” /></div>
+<div><label style={{ color:C.muted, fontSize:12, fontWeight:600, display:“block”, marginBottom:6 }}>Company / App Name</label><Input value={settings.companyName} onChange={v=>set(“companyName”,v)} placeholder=“VR365 Hostly” /></div>
+<div><label style={{ color:C.muted, fontSize:12, fontWeight:600, display:“block”, marginBottom:6 }}>Tagline</label><Input value={settings.tagline} onChange={v=>set(“tagline”,v)} placeholder=“Property Operations” /></div>
 </div>
 </div>
 <div style={{ background:C.surface, border:`1px solid ${C.border}`, borderRadius:14, padding:24 }}>
@@ -1414,8 +1414,8 @@ return (
 <div style={{ display:“flex”, alignItems:“center”, gap:10, marginBottom:12 }}>
 <div style={{ width:32, height:32, background:settings.accentColor, borderRadius:8, display:“flex”, alignItems:“center”, justifyContent:“center”, fontSize:16 }}>⌂</div>
 <div>
-<div style={{ fontWeight:800, fontSize:14, color:C.text }}>{settings.companyName||“VR365 PropFlow”}</div>
-<div style={{ fontSize:11, color:C.muted }}>{settings.tagline||“Property Management”}</div>
+<div style={{ fontWeight:800, fontSize:14, color:C.text }}>{settings.companyName||“VR365 Hostly”}</div>
+<div style={{ fontSize:11, color:C.muted }}>{settings.tagline||“Property Operations”}</div>
 </div>
 </div>
 <div style={{ background:settings.accentColor+“22”, border:`1px solid ${settings.accentColor}44`, borderRadius:7, padding:“8px 12px”, fontSize:13, color:settings.accentColor, fontWeight:600 }}>⬡ Dashboard — Active</div>
@@ -1999,6 +1999,8 @@ const [staff, setStaff] = useState([]);
 const [loading, setLoading] = useState(true);
 const [error, setError] = useState(null);
 const [appSettings, setAppSettings] = useState(getSettings());
+const [showProfileMenu, setShowProfileMenu] = useState(false);
+const [showManagePeople, setShowManagePeople] = useState(false);
 
 const fetchAll = useCallback(async () => {
 try {
@@ -2064,18 +2066,102 @@ return (
         </button>
       ))}
     </nav>
-    <div style={{ padding:"12px 14px", borderTop:`1px solid ${C.border}` }}>
+    <div onClick={()=>setShowProfileMenu(true)} style={{ padding:"12px 14px", borderTop:`1px solid ${C.border}`, cursor:"pointer", transition:"background 0.15s" }}
+      onMouseEnter={e=>e.currentTarget.style.background=C.surfaceAlt}
+      onMouseLeave={e=>e.currentTarget.style.background="transparent"}>
       <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-        <div style={{ width:30, height:30, borderRadius:"50%", background:accent+"30", border:`2px solid ${accent}`, display:"flex", alignItems:"center", justifyContent:"center", fontWeight:800, fontSize:11, color:accent }}>
+        <div style={{ width:32, height:32, borderRadius:"50%", background:accent+"30", border:`2px solid ${accent}`, display:"flex", alignItems:"center", justifyContent:"center", fontWeight:800, fontSize:11, color:accent, flexShrink:0 }}>
           {(appSettings.managerName||"PM").split(" ").map(n=>n[0]).join("").slice(0,2)}
         </div>
-        <div>
-          <div style={{ color:C.text, fontWeight:600, fontSize:12 }}>{appSettings.managerName||"Property Manager"}</div>
+        <div style={{ flex:1, minWidth:0 }}>
+          <div style={{ color:C.text, fontWeight:600, fontSize:12, whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis" }}>{appSettings.managerName||"Property Manager"}</div>
           <div style={{ color:C.muted, fontSize:11 }}>{properties.length} properties · Admin</div>
         </div>
+        <div style={{ color:C.muted, fontSize:14 }}>⋯</div>
       </div>
     </div>
   </div>
+
+  {/* Profile Menu Modal */}
+  {showProfileMenu && (
+    <div style={{ position:"fixed", inset:0, background:"#00000060", zIndex:200 }} onClick={()=>setShowProfileMenu(false)}>
+      <div onClick={e=>e.stopPropagation()} style={{ position:"fixed", bottom:0, left:0, width:215, background:C.surface, borderTop:`1px solid ${C.border}`, borderRight:`1px solid ${C.border}`, borderRadius:"0 16px 0 0", padding:"8px 0 20px", zIndex:201 }}>
+        
+        {/* Profile header */}
+        <div style={{ padding:"14px 16px 12px", borderBottom:`1px solid ${C.border}`, marginBottom:4 }}>
+          <div style={{ display:"flex", alignItems:"center", gap:10 }}>
+            <div style={{ width:40, height:40, borderRadius:"50%", background:accent+"30", border:`2px solid ${accent}`, display:"flex", alignItems:"center", justifyContent:"center", fontWeight:800, fontSize:14, color:accent, flexShrink:0 }}>
+              {(appSettings.managerName||"PM").split(" ").map(n=>n[0]).join("").slice(0,2)}
+            </div>
+            <div>
+              <div style={{ color:C.text, fontWeight:700, fontSize:14 }}>{appSettings.managerName||"Property Manager"}</div>
+              <div style={{ color:C.muted, fontSize:12 }}>Admin · {properties.length} properties</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Menu items */}
+        {[
+          { icon:"👤", label:"My Profile", action:()=>{ setPage("settings"); setShowProfileMenu(false); } },
+          { icon:"👥", label:"Manage People", action:()=>{ setShowManagePeople(true); setShowProfileMenu(false); } },
+          { icon:"⚙️", label:"Settings", action:()=>{ setPage("settings"); setShowProfileMenu(false); } },
+          { icon:"🚪", label:"Sign Out", action:()=>{ if(confirm("Sign out of VR365 Hostly?")) alert("Signed out!"); setShowProfileMenu(false); }, danger:true },
+        ].map(item => (
+          <button key={item.label} onClick={item.action} style={{ display:"flex", alignItems:"center", gap:10, width:"100%", padding:"11px 16px", background:"none", border:"none", color:item.danger?C.red:C.text, fontWeight:item.danger?700:500, fontSize:13, cursor:"pointer", fontFamily:"inherit", textAlign:"left", transition:"background 0.15s" }}
+            onMouseEnter={e=>e.currentTarget.style.background=C.surfaceAlt}
+            onMouseLeave={e=>e.currentTarget.style.background="transparent"}>
+            <span style={{ fontSize:16, width:22 }}>{item.icon}</span>
+            {item.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  )}
+
+  {/* Manage People Modal */}
+  {showManagePeople && (
+    <div style={{ position:"fixed", inset:0, background:"#00000088", zIndex:200, display:"flex", alignItems:"center", justifyContent:"center", padding:16 }} onClick={()=>setShowManagePeople(false)}>
+      <div onClick={e=>e.stopPropagation()} style={{ background:C.surface, border:`1px solid ${C.border}`, borderRadius:16, padding:24, width:"100%", maxWidth:480, maxHeight:"85vh", overflowY:"auto" }}>
+        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:20 }}>
+          <div>
+            <h3 style={{ margin:0, fontSize:18, fontWeight:800, color:C.text }}>👥 Manage People</h3>
+            <p style={{ margin:"4px 0 0", color:C.muted, fontSize:13 }}>{staff.length} team members</p>
+          </div>
+          <button onClick={()=>setShowManagePeople(false)} style={{ background:"none", border:"none", color:C.muted, cursor:"pointer", fontSize:22 }}>×</button>
+        </div>
+
+        {/* Staff list */}
+        <div style={{ display:"flex", flexDirection:"column", gap:8, marginBottom:16 }}>
+          {staff.length === 0 && <div style={{ color:C.muted, textAlign:"center", padding:30, fontSize:13 }}>No staff added yet. Go to the Staff page to add team members.</div>}
+          {staff.map(s => (
+            <div key={s.id} style={{ display:"flex", alignItems:"center", gap:12, padding:"12px 14px", background:C.surfaceAlt, borderRadius:10, border:`1px solid ${C.border}` }}>
+              <div style={{ width:38, height:38, borderRadius:"50%", background:s.color+"30", border:`2px solid ${s.color}`, display:"flex", alignItems:"center", justifyContent:"center", fontWeight:800, fontSize:12, color:s.color, flexShrink:0 }}>
+                {s.name.split(" ").map(n=>n[0]).join("").slice(0,2)}
+              </div>
+              <div style={{ flex:1 }}>
+                <div style={{ color:C.text, fontWeight:700, fontSize:14 }}>{s.name}</div>
+                <div style={{ color:C.muted, fontSize:12 }}>{s.role}</div>
+                {s.email && <div style={{ color:C.muted, fontSize:11 }}>{s.email}</div>}
+              </div>
+              <div style={{ display:"flex", flexDirection:"column", gap:4, alignItems:"flex-end" }}>
+                <span style={{ background:C.green+"22", color:C.green, borderRadius:6, padding:"2px 8px", fontSize:10, fontWeight:700 }}>ACTIVE</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Quick actions */}
+        <div style={{ display:"flex", gap:8 }}>
+          <button onClick={()=>{ setShowManagePeople(false); setPage("staff"); }} style={{ flex:1, padding:"12px", background:C.accent, color:"#fff", border:"none", borderRadius:10, fontWeight:700, fontSize:13, cursor:"pointer", fontFamily:"inherit" }}>
+            + Add New Staff
+          </button>
+          <button onClick={()=>{ setShowManagePeople(false); setPage("staff"); }} style={{ flex:1, padding:"12px", background:C.surfaceAlt, color:C.text, border:`1px solid ${C.border}`, borderRadius:10, fontWeight:700, fontSize:13, cursor:"pointer", fontFamily:"inherit" }}>
+            Manage Staff →
+          </button>
+        </div>
+      </div>
+    </div>
+  )}
 
   {/* Main */}
   <div style={{ flex:1, overflow:"auto", padding:28 }}>
