@@ -120,7 +120,7 @@ return (
 {photos.map((url, i) => (
 <div key={i} style={{ position: “relative”, borderRadius: 8, overflow: “hidden”, aspectRatio: “1”, background: C.dim }}>
 <img src={url} alt={`Photo ${i+1}`} onClick={() => setLightbox(url)} style={{ width: “100%”, height: “100%”, objectFit: “cover”, cursor: “pointer” }} />
-<button onClick={() => handleDelete(url)} style={{ position: “absolute”, top: 4, right: 4, background: C.red, color: “#fff”, border: “none”, borderRadius: “50%”, width: 22, height: 22, cursor: “pointer”, fontSize: 12, fontWeight: 800, display: “flex”, alignItems: “center”, justifyContent: “center” }}>×</button>
+<button onClick={() => handleDelete(url)} style={{ position: “absolute”, top: 4, right: 4, background: C.red, color: “#fff”, border: “none”, borderRadius: “50%”, width: 22, height: 22, cursor: “pointer”, fontSize: 12, fontWeight: 800, display: “flex”, alignItems: “center”, justifyContent: “center” }}>x</button>
 </div>
 ))}
 </div>
@@ -128,7 +128,7 @@ return (
 <div onClick={() => setLightbox(null)} style={{ position: “fixed”, inset: 0, background: “#000000cc”, zIndex: 200, display: “flex”, alignItems: “center”, justifyContent: “center”, padding: 20 }}>
 <div style={{ position: “relative”, maxWidth: “90vw”, maxHeight: “90vh” }}>
 <img src={lightbox} alt=“Full size” style={{ maxWidth: “100%”, maxHeight: “90vh”, borderRadius: 12, objectFit: “contain” }} />
-<button onClick={() => setLightbox(null)} style={{ position: “absolute”, top: -12, right: -12, background: C.red, color: “#fff”, border: “none”, borderRadius: “50%”, width: 32, height: 32, cursor: “pointer”, fontSize: 18, fontWeight: 800 }}>×</button>
+<button onClick={() => setLightbox(null)} style={{ position: “absolute”, top: -12, right: -12, background: C.red, color: “#fff”, border: “none”, borderRadius: “50%”, width: 32, height: 32, cursor: “pointer”, fontSize: 18, fontWeight: 800 }}>x</button>
 </div>
 </div>
 )}
@@ -170,7 +170,7 @@ return (
 <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 16, padding: 24, width: “100%”, maxWidth: 480, maxHeight: “92vh”, overflowY: “auto” }} onClick={e => e.stopPropagation()}>
 <div style={{ display: “flex”, justifyContent: “space-between”, alignItems: “center”, marginBottom: 20 }}>
 <h3 style={{ margin: 0, fontSize: 17, fontWeight: 800, color: C.text }}>{title}</h3>
-<button onClick={onClose} style={{ background: “none”, border: “none”, color: C.muted, cursor: “pointer”, fontSize: 22 }}>×</button>
+<button onClick={onClose} style={{ background: “none”, border: “none”, color: C.muted, cursor: “pointer”, fontSize: 22 }}>x</button>
 </div>
 {children}
 </div>
@@ -213,7 +213,7 @@ return (
 </div>
 <div style={{ display: “flex”, gap: 12, marginBottom: 24, flexWrap: “wrap” }}>
 <StatCard label="Properties" value={properties.length} sub="Total managed" color={C.accent} icon="⌂" />
-<StatCard label=“Occupied” value={occupied} sub={properties.length ? `${Math.round(occupied/properties.length*100)}% occupancy` : “—”} color={C.green} icon=“⬤” />
+<StatCard label=“Occupied” value={occupied} sub={properties.length ? `${Math.round(occupied/properties.length*100)}% occupancy` : “–”} color={C.green} icon=“⬤” />
 <StatCard label="Turnovers" value={turnover} sub="Need attention" color={C.yellow} icon="↻" />
 <StatCard label="Maintenance" value={maintenance} sub="Blocked units" color={C.red} icon="⚙" />
 <StatCard label="High Priority" value={pendingHigh} sub="Action needed" color={C.purple} icon="!" />
@@ -230,7 +230,7 @@ return (
 <div style={{ width: 4, height: 36, borderRadius: 4, background: priorityColor(t.priority), flexShrink: 0 }} />
 <div style={{ flex: 1, minWidth: 0 }}>
 <div style={{ color: C.text, fontWeight: 600, fontSize: 13, whiteSpace: “nowrap”, overflow: “hidden”, textOverflow: “ellipsis” }}>{t.title}</div>
-<div style={{ color: C.muted, fontSize: 11, marginTop: 2 }}>{t.properties?.name} · {t.staff?.name || “Unassigned”}</div>
+<div style={{ color: C.muted, fontSize: 11, marginTop: 2 }}>{t.properties?.name} . {t.staff?.name || “Unassigned”}</div>
 </div>
 <Badge label={t.status} color={taskStatusColor(t.status)} />
 </div>
@@ -562,11 +562,11 @@ return (
       <h3 style={{ margin:"0 0 16px", fontSize:15, fontWeight:700, color:C.text }}>Property Details</h3>
       {[
         { icon:"🔒", label:"Access", value:property?.notes || "Check with manager" },
-        { icon:"🛏️", label:"Beds", value:`${property?.beds || "—"} bedrooms` },
-        { icon:"🏠", label:"Type", value:property?.type || "—" },
-        { icon:"📍", label:"Location", value:property?.location || "—" },
+        { icon:"🛏️", label:"Beds", value:`${property?.beds || "--"} bedrooms` },
+        { icon:"🏠", label:"Type", value:property?.type || "--" },
+        { icon:"📍", label:"Location", value:property?.location || "--" },
         { icon:"👤", label:"Current Guest", value:property?.guest_name || "Vacant" },
-        { icon:"🗓️", label:"Checkout", value:property?.check_out ? new Date(property.check_out).toLocaleDateString() : "—" },
+        { icon:"🗓️", label:"Checkout", value:property?.check_out ? new Date(property.check_out).toLocaleDateString() : "--" },
       ].map(item => (
         <div key={item.label} style={{ display:"flex", alignItems:"center", gap:12, padding:"12px 0", borderBottom:`1px solid ${C.border}` }}>
           <span style={{ fontSize:18, width:28 }}>{item.icon}</span>
@@ -574,7 +574,7 @@ return (
             <div style={{ color:C.muted, fontSize:11, fontWeight:600, textTransform:"uppercase", letterSpacing:"0.06em" }}>{item.label}</div>
             <div style={{ color:C.text, fontSize:13, marginTop:2 }}>{item.value}</div>
           </div>
-          <span style={{ color:C.dim }}>›</span>
+          <span style={{ color:C.dim }}>></span>
         </div>
       ))}
     </div>
@@ -751,9 +751,9 @@ return (
       {/* Mini calendar */}
       <div style={{ background:"#1a4a6b", borderRadius:12, padding:16, marginBottom:16 }}>
         <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:16 }}>
-          <button onClick={()=>{}} style={{ background:"none", border:"none", color:"#fff", cursor:"pointer", fontSize:18 }}>‹</button>
+          <button onClick={()=>{}} style={{ background:"none", border:"none", color:"#fff", cursor:"pointer", fontSize:18 }}>{"<"}</button>
           <div style={{ color:"#fff", fontWeight:700, fontSize:16 }}>{new Date().toLocaleDateString("en-US",{month:"long",year:"numeric"})}</div>
-          <button onClick={()=>{}} style={{ background:"none", border:"none", color:"#fff", cursor:"pointer", fontSize:18 }}>›</button>
+          <button onClick={()=>{}} style={{ background:"none", border:"none", color:"#fff", cursor:"pointer", fontSize:18 }}>{">"}</button>
         </div>
         <div style={{ display:"grid", gridTemplateColumns:"repeat(7,1fr)", gap:4, textAlign:"center" }}>
           {["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].map(d=>(
@@ -941,7 +941,7 @@ return (
         </div>
         <Input value={form.title} onChange={v=>setForm({...form,title:v})} placeholder="Task title *" />
         <Select value={form.property_id} onChange={v=>setForm({...form,property_id:v})} options={[{value:"",label:"Select property..."},...properties.map(p=>({value:p.id,label:p.name}))]} />
-        <Select value={form.assignee_id} onChange={v=>setForm({...form,assignee_id:v})} options={[{value:"",label:"Assign to staff..."},...staff.map(s=>({value:s.id,label:`${s.name} — ${s.role}`}))]} />
+        <Select value={form.assignee_id} onChange={v=>setForm({...form,assignee_id:v})} options={[{value:"",label:"Assign to staff..."},...staff.map(s=>({value:s.id,label:`${s.name} -- ${s.role}`}))]} />
         <Input value={form.due_date} onChange={v=>setForm({...form,due_date:v})} type="datetime-local" />
         <Textarea value={form.notes} onChange={v=>setForm({...form,notes:v})} placeholder="Requirements (one per line)" rows={3} />
         <div style={{ display:"flex", gap:8, justifyContent:"flex-end" }}>
@@ -958,7 +958,7 @@ return (
 }
 
 const defaultChecklists = {
-“Turnover Clean”: [“Strip all beds and remove linens”,“Clean all bathrooms — toilet, sink, shower, mirrors”,“Mop and vacuum all floors”,“Wipe down kitchen counters and appliances”,“Clean inside microwave and oven”,“Empty all trash cans”,“Restock toiletries and supplies”,“Make all beds with fresh linens”,“Dust all surfaces and ceiling fans”,“Check all lightbulbs working”,“Wipe down windows and doors”,“Stage living areas and fluff pillows”,“Check for guest left items”,“Final walkthrough and photos”],
+“Turnover Clean”: [“Strip all beds and remove linens”,“Clean all bathrooms – toilet, sink, shower, mirrors”,“Mop and vacuum all floors”,“Wipe down kitchen counters and appliances”,“Clean inside microwave and oven”,“Empty all trash cans”,“Restock toiletries and supplies”,“Make all beds with fresh linens”,“Dust all surfaces and ceiling fans”,“Check all lightbulbs working”,“Wipe down windows and doors”,“Stage living areas and fluff pillows”,“Check for guest left items”,“Final walkthrough and photos”],
 “Inspection”: [“Check all appliances functioning”,“Test all door locks and keys”,“Inspect for any damage or wear”,“Check HVAC filters”,“Test smoke and CO detectors”,“Inspect plumbing for leaks”,“Check exterior and landscaping”,“Review guest manual”,“Verify all amenities stocked”,“Document condition with photos”],
 “Maintenance Check”: [“Inspect HVAC system”,“Check water heater”,“Test all electrical outlets”,“Inspect roof and gutters”,“Check windows and seals”,“Inspect plumbing fixtures”,“Test garage doors”,“Check pool/spa equipment”,“Inspect exterior lighting”,“Review pest control”],
 “Pre-Arrival”: [“Confirm fresh linens on all beds”,“Set thermostat to welcome temp”,“Place welcome basket”,“Ensure all supplies stocked”,“Check WiFi is working”,“Leave guest manual visible”,“Ensure parking is clear”,“Test all TVs and remotes”,“Verify access codes working”,“Final cleanliness check”],
@@ -1074,7 +1074,7 @@ return (
 <div style={{ display:“flex”, justifyContent:“space-between”, alignItems:“center”, marginBottom:24 }}>
 <div>
 <h2 style={{ margin:0, fontSize:22, fontWeight:800, color:C.text }}>Schedule</h2>
-<p style={{ margin:“4px 0 0”, color:C.muted, fontSize:13 }}>{days[0].toLocaleDateString(“en-US”,{month:“short”,day:“numeric”})} – {days[6].toLocaleDateString(“en-US”,{month:“short”,day:“numeric”,year:“numeric”})}</p>
+<p style={{ margin:“4px 0 0”, color:C.muted, fontSize:13 }}>{days[0].toLocaleDateString(“en-US”,{month:“short”,day:“numeric”})} - {days[6].toLocaleDateString(“en-US”,{month:“short”,day:“numeric”,year:“numeric”})}</p>
 </div>
 <div style={{ display:“flex”, gap:8 }}>
 <Btn variant=“ghost” onClick={()=>setCurrentWeek(w=>w-1)}>← Prev</Btn>
@@ -1094,7 +1094,7 @@ return (
 <div style={{ color:isToday?C.accent:C.text, fontSize:18, fontWeight:800 }}>{day.getDate()}</div>
 </div>
 <div style={{ padding:8, display:“flex”, flexDirection:“column”, gap:5 }}>
-{dayTasks.length===0 && <div style={{ color:C.dim, fontSize:11, textAlign:“center”, padding:“12px 0” }}>—</div>}
+{dayTasks.length===0 && <div style={{ color:C.dim, fontSize:11, textAlign:“center”, padding:“12px 0” }}>–</div>}
 {dayTasks.map(t => (
 <div key={t.id} style={{ background:(typeColors[t.type]||C.accent)+“18”, border:`1px solid ${typeColors[t.type]||C.accent}35`, borderRadius:6, padding:“5px 8px” }}>
 <div style={{ color:typeColors[t.type]||C.accent, fontSize:10, fontWeight:700, textTransform:“uppercase” }}>{t.type}</div>
@@ -1123,7 +1123,7 @@ return (
 </div>
 <Input value={form.title} onChange={v=>setForm({…form,title:v})} placeholder=“Task title *” />
 <Select value={form.property_id} onChange={v=>setForm({…form,property_id:v})} options={[{value:””,label:“Select property…”},…properties.map(p=>({value:p.id,label:p.name}))]} />
-<Select value={form.assignee_id} onChange={v=>setForm({…form,assignee_id:v})} options={[{value:””,label:“Assign to staff…”},…staff.map(s=>({value:s.id,label:`${s.name} — ${s.role}`}))]} />
+<Select value={form.assignee_id} onChange={v=>setForm({…form,assignee_id:v})} options={[{value:””,label:“Assign to staff…”},…staff.map(s=>({value:s.id,label:`${s.name} -- ${s.role}`}))]} />
 <Input value={form.due_date} onChange={v=>setForm({…form,due_date:v})} type=“datetime-local” />
 <Textarea value={form.notes} onChange={v=>setForm({…form,notes:v})} placeholder=“Notes” rows={2} />
 <div style={{ display:“flex”, gap:8, justifyContent:“flex-end” }}>
@@ -1140,7 +1140,7 @@ return (
 const msgTemplates = [
 { id:1, name:“Welcome Message”, trigger:“Check-in Day”, subject:“Welcome to {property}!”, body:“Hi {guest},\n\nWelcome! We’re so excited to have you stay at {property}.\n\n📍 Address: {address}\n🔑 Access code: {code}\n📶 WiFi: {wifi}\n\nDon’t hesitate to reach out if you need anything!\n\nWarm regards,\n{host}” },
 { id:2, name:“Pre-Arrival”, trigger:“1 Day Before”, subject:“Your stay at {property} is tomorrow!”, body:“Hi {guest},\n\nWe’re looking forward to welcoming you tomorrow at {property}!\n\nCheck-in is from 3:00 PM.\n\nSafe travels,\n{host}” },
-{ id:3, name:“Checkout Reminder”, trigger:“Checkout Day”, subject:“Checkout reminder — {property}”, body:“Hi {guest},\n\nCheckout is today by 11:00 AM. Please:\n✓ Leave keys as instructed\n✓ Turn off all lights and AC\n✓ Lock all doors\n\nThank you!\n{host}” },
+{ id:3, name:“Checkout Reminder”, trigger:“Checkout Day”, subject:“Checkout reminder – {property}”, body:“Hi {guest},\n\nCheckout is today by 11:00 AM. Please:\n✓ Leave keys as instructed\n✓ Turn off all lights and AC\n✓ Lock all doors\n\nThank you!\n{host}” },
 { id:4, name:“Mid-Stay Check-in”, trigger:“Day 2 of Stay”, subject:“How’s your stay at {property}?”, body:“Hi {guest},\n\nHope you’re enjoying your stay! Let us know if you need anything at all.\n\nBest,\n{host}” },
 { id:5, name:“Post-Stay Review”, trigger:“1 Day After Checkout”, subject:“Thank you for staying with us!”, body:“Hi {guest},\n\nThank you so much for your stay at {property}! We hope you had a wonderful time.\n\nA quick review means the world to us!\n\nWe hope to welcome you back soon.\n\nWarm regards,\n{host}” },
 ];
@@ -1418,7 +1418,7 @@ return (
 <div style={{ fontSize:11, color:C.muted }}>{settings.tagline||“Property Operations”}</div>
 </div>
 </div>
-<div style={{ background:settings.accentColor+“22”, border:`1px solid ${settings.accentColor}44`, borderRadius:7, padding:“8px 12px”, fontSize:13, color:settings.accentColor, fontWeight:600 }}>⬡ Dashboard — Active</div>
+<div style={{ background:settings.accentColor+“22”, border:`1px solid ${settings.accentColor}44`, borderRadius:7, padding:“8px 12px”, fontSize:13, color:settings.accentColor, fontWeight:600 }}>⬡ Dashboard – Active</div>
 </div>
 </div>
 </div>
@@ -1433,7 +1433,7 @@ return (
 </div>
 <div>
 <div style={{ color:C.text, fontWeight:700 }}>{settings.managerName||“Property Manager”}</div>
-<div style={{ color:C.muted, fontSize:12 }}>Admin — Full Access</div>
+<div style={{ color:C.muted, fontSize:12 }}>Admin – Full Access</div>
 </div>
 </div>
 <div><label style={{ color:C.muted, fontSize:12, fontWeight:600, display:“block”, marginBottom:6 }}>Full Name</label><Input value={settings.managerName} onChange={v=>set(“managerName”,v)} placeholder=“Your name” /></div>
@@ -1462,7 +1462,7 @@ return (
 <div style={{ display:“flex”, flexDirection:“column”, gap:14 }}>
 <div><label style={{ color:C.muted, fontSize:12, fontWeight:600, display:“block”, marginBottom:6 }}>Timezone</label><Select value={settings.timezone||“America/Los_Angeles”} onChange={v=>set(“timezone”,v)} options={[{value:“America/Los_Angeles”,label:“Pacific Time (PT)”},{value:“America/Denver”,label:“Mountain Time (MT)”},{value:“America/Chicago”,label:“Central Time (CT)”},{value:“America/New_York”,label:“Eastern Time (ET)”}]} /></div>
 <div><label style={{ color:C.muted, fontSize:12, fontWeight:600, display:“block”, marginBottom:6 }}>Date Format</label><Select value={settings.dateFormat||“MM/DD/YYYY”} onChange={v=>set(“dateFormat”,v)} options={[{value:“MM/DD/YYYY”,label:“MM/DD/YYYY (US)”},{value:“DD/MM/YYYY”,label:“DD/MM/YYYY (EU)”},{value:“YYYY-MM-DD”,label:“YYYY-MM-DD (ISO)”}]} /></div>
-<div><label style={{ color:C.muted, fontSize:12, fontWeight:600, display:“block”, marginBottom:6 }}>Currency</label><Select value={settings.currency||“USD”} onChange={v=>set(“currency”,v)} options={[{value:“USD”,label:“USD — US Dollar”},{value:“EUR”,label:“EUR — Euro”},{value:“GBP”,label:“GBP — British Pound”},{value:“CAD”,label:“CAD — Canadian Dollar”}]} /></div>
+<div><label style={{ color:C.muted, fontSize:12, fontWeight:600, display:“block”, marginBottom:6 }}>Currency</label><Select value={settings.currency||“USD”} onChange={v=>set(“currency”,v)} options={[{value:“USD”,label:“USD – US Dollar”},{value:“EUR”,label:“EUR – Euro”},{value:“GBP”,label:“GBP – British Pound”},{value:“CAD”,label:“CAD – Canadian Dollar”}]} /></div>
 </div>
 </div>
 )}
@@ -1478,7 +1478,7 @@ const sampleReservations = [
 { id:2, guest:“Williams, R.”, property_id:null, property:“Beachfront Suite”, checkin:“2026-04-10”, checkout:“2026-04-14”, guests:2, status:“active”, source:“VRBO”, notes:”” },
 { id:3, guest:“Chen Party”, property_id:null, property:“Palm Springs Casa”, checkin:“2026-04-09”, checkout:“2026-04-12”, guests:6, status:“active”, source:“Direct”, notes:“Pool heat requested” },
 { id:4, guest:“Martinez, J.”, property_id:null, property:“Sunset Cottage”, checkin:“2026-04-15”, checkout:“2026-04-18”, guests:3, status:“upcoming”, source:“Airbnb”, notes:”” },
-{ id:5, guest:“Taylor Group”, property_id:null, property:“Mountain Retreat”, checkin:“2026-04-20”, checkout:“2026-04-25”, guests:8, status:“upcoming”, source:“VRBO”, notes:“Bachelor party — extra towels” },
+{ id:5, guest:“Taylor Group”, property_id:null, property:“Mountain Retreat”, checkin:“2026-04-20”, checkout:“2026-04-25”, guests:8, status:“upcoming”, source:“VRBO”, notes:“Bachelor party – extra towels” },
 { id:6, guest:“Anderson, M.”, property_id:null, property:“Downtown Loft #3”, checkin:“2026-04-08”, checkout:“2026-04-10”, guests:2, status:“completed”, source:“Direct”, notes:”” },
 ];
 
@@ -1591,7 +1591,7 @@ return (
   <div style={{ position:"relative", marginBottom:12 }}>
     <span style={{ position:"absolute", left:12, top:"50%", transform:"translateY(-50%)", color:C.muted, fontSize:14 }}>🔍</span>
     <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search by guest name or property..." style={{ width:"100%", background:C.surface, border:`1px solid ${C.border}`, borderRadius:10, padding:"10px 12px 10px 36px", color:C.text, fontSize:13, fontFamily:"inherit", outline:"none" }} />
-    {search && <button onClick={()=>setSearch("")} style={{ position:"absolute", right:12, top:"50%", transform:"translateY(-50%)", background:"none", border:"none", color:C.muted, cursor:"pointer", fontSize:16 }}>×</button>}
+    {search && <button onClick={()=>setSearch("")} style={{ position:"absolute", right:12, top:"50%", transform:"translateY(-50%)", background:"none", border:"none", color:C.muted, cursor:"pointer", fontSize:16 }}>x</button>}
   </div>
 
   {/* Filter Panel */}
@@ -1679,7 +1679,7 @@ return (
       {filterGuests !== "all" && <span style={{ background:C.yellow+"22", color:C.yellow, border:`1px solid ${C.yellow}44`, borderRadius:20, padding:"4px 12px", fontSize:12, fontWeight:600 }}>👥 {filterGuests}</span>}
       {filterNights !== "all" && <span style={{ background:C.purple+"22", color:C.purple, border:`1px solid ${C.purple}44`, borderRadius:20, padding:"4px 12px", fontSize:12, fontWeight:600 }}>🌙 {filterNights} stay</span>}
       {filterSpecial && <span style={{ background:C.red+"22", color:C.red, border:`1px solid ${C.red}44`, borderRadius:20, padding:"4px 12px", fontSize:12, fontWeight:600 }}>⚡ Special requests</span>}
-      <button onClick={clearFilters} style={{ background:"none", border:`1px solid ${C.border}`, borderRadius:20, padding:"4px 12px", fontSize:12, color:C.muted, cursor:"pointer", fontFamily:"inherit" }}>Clear all ×</button>
+      <button onClick={clearFilters} style={{ background:"none", border:`1px solid ${C.border}`, borderRadius:20, padding:"4px 12px", fontSize:12, color:C.muted, cursor:"pointer", fontFamily:"inherit" }}>Clear all x</button>
     </div>
   )}
 
@@ -1876,7 +1876,7 @@ return (
             <select value={form.property} onChange={e=>setForm({...form,property:e.target.value})} style={{ width:"100%", background:form.property?C.accentDim:C.surfaceAlt, border:`1px solid ${form.property?C.accent:C.border}`, borderRadius:8, padding:"10px 12px", color:form.property?C.accent:C.muted, fontSize:13, fontFamily:"inherit", outline:"none", appearance:"none", cursor:"pointer" }}>
               <option value="">🏠 Select a property...</option>
               {properties.map(p=>(
-                <option key={p.id} value={p.name} style={{background:C.surface,color:C.text}}>{p.name} — {p.location}</option>
+                <option key={p.id} value={p.name} style={{background:C.surface,color:C.text}}>{p.name} -- {p.location}</option>
               ))}
             </select>
             <span style={{ position:"absolute", right:12, top:"50%", transform:"translateY(-50%)", color:C.muted, pointerEvents:"none" }}>⌄</span>
@@ -2010,7 +2010,7 @@ db.get(“properties”, “order=created_at.desc”),
 db.get(“tasks”, “order=created_at.desc&select=*,properties(name),staff(name,color)”),
 db.get(“staff”, “order=name.asc”),
 ]);
-if (props.code) throw new Error(props.message || “DB error — run SQL setup in Supabase”);
+if (props.code) throw new Error(props.message || “DB error – run SQL setup in Supabase”);
 setProperties(props); setTasks(tsk); setStaff(stf); setError(null);
 } catch (e) { setError(e.message); } finally { setLoading(false); }
 }, []);
@@ -2075,7 +2075,7 @@ return (
         </div>
         <div style={{ flex:1, minWidth:0 }}>
           <div style={{ color:C.text, fontWeight:600, fontSize:12, whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis" }}>{appSettings.managerName||"Property Manager"}</div>
-          <div style={{ color:C.muted, fontSize:11 }}>{properties.length} properties · Admin</div>
+          <div style={{ color:C.muted, fontSize:11 }}>{properties.length} properties . Admin</div>
         </div>
         <div style={{ color:C.muted, fontSize:14 }}>⋯</div>
       </div>
@@ -2095,7 +2095,7 @@ return (
             </div>
             <div>
               <div style={{ color:C.text, fontWeight:700, fontSize:14 }}>{appSettings.managerName||"Property Manager"}</div>
-              <div style={{ color:C.muted, fontSize:12 }}>Admin · {properties.length} properties</div>
+              <div style={{ color:C.muted, fontSize:12 }}>Admin . {properties.length} properties</div>
             </div>
           </div>
         </div>
@@ -2127,7 +2127,7 @@ return (
             <h3 style={{ margin:0, fontSize:18, fontWeight:800, color:C.text }}>👥 Manage People</h3>
             <p style={{ margin:"4px 0 0", color:C.muted, fontSize:13 }}>{staff.length} team members</p>
           </div>
-          <button onClick={()=>setShowManagePeople(false)} style={{ background:"none", border:"none", color:C.muted, cursor:"pointer", fontSize:22 }}>×</button>
+          <button onClick={()=>setShowManagePeople(false)} style={{ background:"none", border:"none", color:C.muted, cursor:"pointer", fontSize:22 }}>x</button>
         </div>
 
         {/* Staff list */}
